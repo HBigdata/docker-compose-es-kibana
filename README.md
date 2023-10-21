@@ -1,4 +1,3 @@
-@[TOC]
 ## 一、概述
 使用 Docker Compose 快速部署 Elasticsearch 和 Kibana 可以帮助您在本地或开发环境中轻松设置和管理这两个重要的工具，用于存储和可视化日志数据、监控和搜索。以下是一个概述的步骤：
 
@@ -28,7 +27,7 @@ docker-compose up -d
 
 如果有想知道 on k8s 部署的小伙伴，可以参考我这篇文章：[ElasticSearch+Kibana on K8s 讲解与实战操作（版本7.17.3）](https://mp.weixin.qq.com/s?__biz=MzI3MDM5NjgwNg==&mid=2247488924&idx=1&sn=8f5b6363a90a654f87869598f64db5dd&chksm=ead0e975dda7606385381581e382a2282f2ae79256c934bdd14a5ef2b80a2e45d904c3a527e3#rd)
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/e056e9e97e9c4c8b8beb3699e080cf90.png)
+![输入图片说明](images/1.png)
 ## 二、开始编排部署（Elasticsearch 和 Kibana）
 
 `Elasticsearch` 是一个**开源的分布式搜索和分析引擎**，最初由 Elasticsearch N.V.（现在是 Elastic N.V.）开发并维护。它是基于 `Apache Lucene` 搜索引擎构建的，专门设计用于处理和分析大规模的数据，提供了强大的全文搜索、结构化数据存储、分析和可视化功能。以下是 Elasticsearch 的主要特点和用途的概述：
@@ -54,7 +53,8 @@ docker-compose up -d
 - **商业支持**：Elastic N.V. 提供了 Elasticsearch 的商业支持和托管服务，以满足企业级需求。
 
 总之，Elasticsearch 是一个强大且多才多艺的搜索和分析引擎，适用于各种用途，从全文搜索到日志分析和可视化数据。它在各种行业中被广泛使用，包括**搜索引擎**、**电子商务**、**日志管理**、**安全信息与事件管理、科学研究**和更多领域。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/57b7e172965b4772ac17557aa32ec961.png)
+
+![输入图片说明](images/2.png)
 
 服务布局：
 | 服务名称/主机名 | 开放端口 | |
@@ -63,7 +63,6 @@ docker-compose up -d
 | node-2 | 9201 | 1G |
 | node-3 | 9202 | 1G |
 | kibana	 | 5601| 不限 |
-| elasticsearch-head | 9100 | 不限 |
 ### 1）部署 docker
 ```bash
 # 安装yum-config-manager配置工具
@@ -462,11 +461,11 @@ docker-compose ps
 curl localhost:9200
 curl localhost:9200/_cat/health
 ```
-![在这里插入图片描述](https://img-blog.csdnimg.cn/eb4934603bc94186a0e9c643abe3a498.png)
+![输入图片说明](images/3.png)
 
 
 kibana：`http://ip:5601/`
-![在这里插入图片描述](https://img-blog.csdnimg.cn/9b1686cace314b3cbfaad5d90a311a0f.png)
+![输入图片说明](images/4.png)
 
 ---
 通过 docker-compose 快速部署 Elasticsearch 和 Kibana 保姆级教程就先到这里了，有任何疑问也可关注我公众号：`大数据与云原生技术分享`，进行技术交流，如本篇文章对您有所帮助，麻烦帮忙一键三连（**点赞、转发、收藏**）~
