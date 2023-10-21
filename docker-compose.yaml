@@ -1,0 +1,121 @@
+version: "3"
+services:
+  node-1:
+    image: registry.cn-hangzhou.aliyuncs.com/bigdata_cloudnative/elasticsearch:7.17.5
+    container_name: node-1
+    hostname: node-1
+    environment:
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+      - "TZ=Asia/Shanghai"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9200:9200"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    volumes:
+      - ./es/node-1/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./es/plugins:/usr/share/elasticsearch/plugins
+      - ./es/node-1/data:/usr/share/elasticsearch/data
+      - ./es/node-1/log:/usr/share/elasticsearch/log
+    networks:
+      - bigdata
+    healthcheck:
+      test: ["CMD-SHELL", "curl -I http://localhost:9200 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  node-2:
+    image: registry.cn-hangzhou.aliyuncs.com/bigdata_cloudnative/elasticsearch:7.17.5
+    container_name: node-2
+    hostname: node-2
+    environment:
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+      - "TZ=Asia/Shanghai"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9201:9200"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    volumes:
+      - ./es/node-2/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./es/plugins:/usr/share/elasticsearch/plugins
+      - ./es/node-2/data:/usr/share/elasticsearch/data
+      - ./es/node-2/log:/usr/share/elasticsearch/log
+    networks:
+      - bigdata
+    healthcheck:
+      test: ["CMD-SHELL", "curl -I http://localhost:9200 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  node-3:
+    image: registry.cn-hangzhou.aliyuncs.com/bigdata_cloudnative/elasticsearch:7.17.5
+    container_name: node-3
+    hostname: node-3
+    environment:
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+      - "TZ=Asia/Shanghai"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9202:9200"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    volumes:
+      - ./es/node-3/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./es/plugins:/usr/share/elasticsearch/plugins
+      - ./es/node-3/data:/usr/share/elasticsearch/data
+      - ./es/node-3/log:/usr/share/elasticsearch/log
+    networks:
+      - bigdata
+    healthcheck:
+      test: ["CMD-SHELL", "curl -I http://localhost:9200 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  kibana:
+    container_name: kibana
+    hostname: kibana
+    image: registry.cn-hangzhou.aliyuncs.com/bigdata_cloudnative/kibana:7.17.5
+    environment:
+      TZ: 'Asia/Shanghai'
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - 5601:5601
+    networks:
+      - bigdata
+    healthcheck:
+      test: ["CMD-SHELL", "curl -I http://localhost:5601 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+# 连接外部网络
+networks:
+  bigdata:
+    external: true
+
